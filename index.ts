@@ -85,7 +85,8 @@ function i18n<T extends Input>(strings: T): Result<T> {
           return newStr;
         };
       } else {
-        templatedStrings[key] = i18n(strings[key] as Input);
+        // Не смог придумать как корректно решить проблему с ошибкой типизации при присваивании
+        (templatedStrings[key] as any) = i18n(strings[key] as Input);
       }
     }
   }
