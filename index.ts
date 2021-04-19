@@ -69,11 +69,9 @@ function i18n<T extends Input>(strings: T): Result<T> {
   let templatedStrings: Result<T> = <Result<T>>Object.create({});
   for (let key in strings) {
     if (strings.hasOwnProperty(key)) {
-      const el = strings[key];
-      if (typeof el === "string") {
-        const str: string = el;
+      if (typeof strings[key] === "string") {
         (templatedStrings[key] as Func) = <Func>function (data?) {
-          let newStr = str;
+          let newStr = <string>strings[key];
           if (data) {
             for (let dataKey in data) {
               if (data.hasOwnProperty(dataKey)) {
@@ -87,7 +85,7 @@ function i18n<T extends Input>(strings: T): Result<T> {
           return newStr;
         };
       } else {
-        templatedStrings[key] = <Result<T>>i18n(strings[key] as Input);
+        templatedStrings[key] = i18n(strings[key] as Input);
       }
     }
   }
